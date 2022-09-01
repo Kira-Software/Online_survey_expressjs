@@ -4,7 +4,7 @@
   "description": "express learning from udemy",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "kirubel girmay",
   "license": "ISC",
