@@ -16,7 +16,7 @@ dotenv.config({ path: "../config.env" });
 const app = express();
 app.use(express.json());
 app.use(cors({ 
-  origin: "*", 
+  origin: "https://online-survey-reactjs-kira-software.vercel.app/", 
   credentials: true 
  }));
 console.log(process.env.DATABASE_LOCAL);
