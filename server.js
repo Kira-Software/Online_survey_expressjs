@@ -15,11 +15,14 @@ dotenv.config({ path: "../config.env" });
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ 
+  origin: "https://online-survey-reactjs-kira-software.vercel.app/", 
+  credentials: true 
+ }));
 console.log(process.env.DATABASE_LOCAL);
 
 app.use("/api/user", userroute);
-app.use("/api/auth", (req,res) => res.status(200).send("reached to server"));
+app.use("/api/auth", authroute);
 app.use("/api/survey", surveyroute);
 app.use("/api/givemesurvey", givemesurvey);
 app.use("/api/postchoice", postchoice);
