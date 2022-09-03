@@ -19,7 +19,7 @@ app.use(cors());
 console.log(process.env.DATABASE_LOCAL);
 
 app.use("/api/user", userroute);
-app.use("/api/auth", authroute);
+app.use("/api/auth", (req,res) => res.status(200).send("reached to server"));
 app.use("/api/survey", surveyroute);
 app.use("/api/givemesurvey", givemesurvey);
 app.use("/api/postchoice", postchoice);
