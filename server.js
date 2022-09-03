@@ -16,7 +16,7 @@ dotenv.config({ path: "../config.env" });
 const app = express();
 app.use(express.json());
 app.use(cors({ 
-  origin: "https://survey-react-project.herokuapp.com/", 
+  "Access-Control-Allow_Origin": "https://survey-react-project.herokuapp.com/", 
   credentials: true 
  }));
 console.log(process.env.DATABASE_LOCAL);
