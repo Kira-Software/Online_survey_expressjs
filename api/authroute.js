@@ -24,12 +24,12 @@ router.get("/", auth, async (req, res) => {
 
 router.post(
   "/",
-  [
-    check("username", "the username is required")
-      .not()
-      .isEmpty(),
-    check("password", "password should be present").isLength({ min: 1 })
-  ],
+  // [
+  //   check("username", "the username is required")
+  //     .not()
+  //     .isEmpty(),
+  //   check("password", "password should be present").isLength({ min: 1 })
+  // ],
   async (req, res) => {
     res.status(200).json({message: "success", data: req.body})
     const errors = validationResult(req);
