@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const cors = require("cors");
+// const cors = require("cors");
 const userroute = require("./api/users");
 const authroute = require("./api/authroute");
 const surveyroute = require("./api/surveyroute");
@@ -15,10 +15,10 @@ dotenv.config({ path: "../config.env" });
 
 const app = express();
 app.use(express.json());
-app.use(cors({ 
-  origin: "https://online-survey-reactjs-kira-software.vercel.app/", 
-  credentials: true 
- }));
+// app.use(cors({ 
+//   origin: "https://online-survey-reactjs-kira-software.vercel.app/", 
+//   credentials: true 
+//  }));
 console.log(process.env.DATABASE_LOCAL);
 
 app.use("/api/user", userroute);
