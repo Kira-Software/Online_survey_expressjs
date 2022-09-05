@@ -22,7 +22,7 @@ app.use(express.json());
 console.log(process.env.DATABASE_LOCAL);
 
 app.use("/api/user", userroute);
-app.use("/api/auth", authroute);
+app.use("/api/auth", (req,res) => res.status(200).json({message: "success", data: req.body}));
 app.use("/api/survey", surveyroute);
 app.use("/api/givemesurvey", givemesurvey);
 app.use("/api/postchoice", postchoice);

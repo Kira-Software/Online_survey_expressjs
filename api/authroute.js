@@ -24,14 +24,13 @@ router.get("/", auth, async (req, res) => {
 
 router.post(
   "/",
-  // [
-  //   check("username", "the username is required")
-  //     .not()
-  //     .isEmpty(),
-  //   check("password", "password should be present").isLength({ min: 1 })
-  // ],
-  async (req, res) => {
-    res.status(200).json({message: "success", data: req.body})
+  [
+    check("username", "the username is required")
+      .not()
+      .isEmpty(),
+    check("password", "password should be present").isLength({ min: 1 })
+  ],
+  async (req, res) => {zz
     const errors = validationResult(req);
     // console.log("the errors of validation result is",errors);
 
