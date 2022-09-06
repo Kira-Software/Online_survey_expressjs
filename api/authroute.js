@@ -41,50 +41,45 @@ router.post(
     const { username, password } = req.body;
 
     try {
-      let user = await User.findOne({ username }, {$exists: true}).toArray(function(err, docs) {
-        if (docs.length < 0) {
-          res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
+      let user = await User.findOne({ username });
 
+      if (user.length < 0 ) {
+        res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
+      }
+      else {
+        const ismatch = await bcrypt.compare(password, user.password);
+
+      if (!ismatch) {
+        res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
+      }
+      const payload = {
+        user: {
+          id: user.id,
+          // username: user.username,
+          // job: user.job,
+          // gender: user.gender,
+          // birthdate: user.birthdate
         }
-        else {
-          const ismatch = await bcrypt.compare(password, user.password);
+      };
 
-              if (!ismatch) {
-                res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
-              }
-              const payload = {
-                user: {
-                  id: user.id,
-                  // username: user.username,
-                  // job: user.job,
-                  // gender: user.gender,
-                  // birthdate: user.birthdate
-                }
-              };
+      console.log("the value of payload in the middleware is ", payload);
 
-              console.log("the value of payload in the middleware is ", payload);
-
-              jwt.sign(
-                payload,
-                process.env.JWTSECRET,
-                { expiresIn: 360000 },
-                (err, token) => {
-                  if (err) throw err;
-                  res.json({
-                    message: "token genetated successfully",
-                    token: token
-                  });
-                }
-              );
+      jwt.sign(
+        payload,
+        process.env.JWTSECRET,
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({
+            message: "token genetated successfully",
+            token: token
+          });
         }
-      });
+      );
 
-      // if (!user) {
-      //   res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
-      // }
+      }
 
-   
-
+      
       // console.log(req.body);
       // res.send("User is registerd successfully");
     } catch (err) {
