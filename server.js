@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const cors = require("cors");
+// const cors = require("cors");
 const userroute = require("./api/users");
 const authroute = require("./api/authroute");
 const surveyroute = require("./api/surveyroute");
@@ -15,10 +15,10 @@ dotenv.config({ path: "../config.env" });
 
 const app = express();
 app.use(express.json());
-app.use(cors({ 
-  origin: "https://63160dd2d8aeff6ffc33fc6b--creative-dusk-bceed1.netlify.app/", 
-  credentials: true 
- }));
+// app.use(cors({ 
+//   origin: "https://63160dd2d8aeff6ffc33fc6b--creative-dusk-bceed1.netlify.app/", 
+//   credentials: true 
+//  }));
 console.log(process.env.DATABASE_LOCAL);
 
 app.use("/api/user", userroute);
@@ -33,7 +33,7 @@ app.use("/api/deletesurvey", deletesurvey);
 app.use("/", (req, res) => res.send("helow this is from the root directory"));
 
 mongoose
-  .connect(process.env.DATABASE_LOCAL, {
+  .connect(process.env.DATABASE_ATLAS, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: true,
