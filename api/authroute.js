@@ -30,7 +30,7 @@ router.post(
       .isEmpty(),
     check("password", "password should be present").isLength({ min: 1 })
   ],
-  async (req, res) => {zz
+  async (req, res) => {
     const errors = validationResult(req);
     // console.log("the errors of validation result is",errors);
 
