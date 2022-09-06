@@ -37,14 +37,13 @@ router.post(
     const { username, gender, job, birthdate, age,email, password ,image} = req.body;
 
     try {
-      let user = await User.findOne({ username });
-
-      if (user) {
-        errors=[{msg:"this user is already exists"}];
-        res.status(400).json({ errors: errors });
-      }
-
-      user = new User({
+       await User.findOne({ username }, {$exists: true}).toArray(function(err, docs) {
+        if (docs.length > 0) {
+          errors=[{msg:"this user is already exists"}];
+          res.status(400).json({ errors: errors });
+        }
+        else {
+            let user = new User({
         username,
         gender,
         job,
@@ -81,6 +80,12 @@ router.post(
           });
         }
       );
+        }
+      });
+
+ 
+
+   
 
       // console.log(req.body);
       // res.send("User is registerd successfully");
