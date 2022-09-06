@@ -31,7 +31,7 @@ router.post(
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
+     return res.status(400).json({ errors: errors.array() });
     }
     console.log(req.body);
     const { username, gender, job, birthdate, age,email, password ,image} = req.body;
@@ -39,13 +39,12 @@ router.post(
     try {
       let user = await User.findOne({ username });
 
-      if (user.length > 0) {
+      if (user) {
         errors=[{msg:"this user is already exists"}];
-        res.status(400).json({ errors: errors });
+       return res.status(400).json({ errors: errors });
       }
 
-      else{
-            user = new User({
+      user = new User({
         username,
         gender,
         job,
@@ -76,20 +75,17 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({
+         return res.json({
             message: "token genetated successfully",
             token: token
           });
         }
       );
-      }
-
-  
 
       // console.log(req.body);
       // res.send("User is registerd successfully");
     } catch (err) {
-      res.status(500).json({ status: "server error", message: err });
+      return res.status(500).json({ status: "server error", message: err });
     }
   }
 );

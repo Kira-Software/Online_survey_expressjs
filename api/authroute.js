@@ -43,22 +43,22 @@ router.post(
     try {
       let user = await User.findOne({ username });
 
-      if (user.length < 0 ) {
-        res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
+      if (!user) {
+       return res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
       }
-      else {
-        const ismatch = await bcrypt.compare(password, user.password);
+
+      const ismatch = await bcrypt.compare(password, user.password);
 
       if (!ismatch) {
-        res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
+        return res.status(400).json({ errors: [{ msg: "INVALID CREDENTIALS" }] });
       }
       const payload = {
         user: {
           id: user.id,
-          // username: user.username,
-          // job: user.job,
-          // gender: user.gender,
-          // birthdate: user.birthdate
+          username: user.username,
+          job: user.job,
+          gender: user.gender,
+          birthdate: user.birthdate
         }
       };
 
@@ -70,20 +70,17 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({
+          return res.json({
             message: "token genetated successfully",
             token: token
           });
         }
       );
 
-      }
-
-      
       // console.log(req.body);
       // res.send("User is registerd successfully");
     } catch (err) {
-      res.status(500).json({ status: "server error", message: err });
+      return res.status(500).json({ status: "server error", message: err });
     }
   }
 );
